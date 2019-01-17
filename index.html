@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />-->
+		<meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover">
+		
+		<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+		
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		
+		<link rel="stylesheet" href="css/owl.carousel.min.css">
+		<link rel="stylesheet" href="css/owl.theme.default.min.css">
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/owl.carousel.js"></script>
+		
+		<script src="js/jquery-cookie.js"></script>
+		
+		<title>SBCD</title>
+	</head>
+	
+	<body>
+		
+		<script>
+			$(document).ready(function(){
+				"use strict";	
+
+				if(typeof Cookies.get('nome') !== 'undefined' ) {
+					$( "#login input" ).hide();
+					$( "#loader" ).show();
+					window.location.replace("inicial.html");
+				}
+
+				$('#login button').click(function(){
+					
+					$('.response').html('<span id="erro-login"><span>');
+					
+					var emails = $('#login input[type=text]').val();
+					var pwds = $('#login input[type=password]').val();
+
+					var url="http://sbcd.appsbdrj.kinghost.net/login_new.php?login=" + emails + "&pwd=" + pwds;
+					
+					$.getJSON(url,function(result){
+						$.each(result, function(i, field){		
+							if( field.status == "recad" ) {
+								$('.response').html('<span id="erro-login" style="margin: 15px 10px 5px; display: block;">Você ainda não possui uma senha? <a href="https://www.associados.sbcd.org.br/identificacao/recadastramento" target="_blank">Clique aqui</a> para criar sua senha.<span>');
+								$( "#login input" ).show();
+							} else if( field.status == "2" ) {
+								$('.response').html('<span id="erro-login" style="margin: 15px 10px 5px; display: block;">Ocorreu um erro, por favor tente novamente.<span>');
+								$( "#login input" ).show();
+							} else if( field.status == "3" ) {
+								$('.response').html('<span id="erro-login" style="margin: 15px 10px 5px; display: block;">Usuário e/ou senha inválido(s).<span>');
+								$( "#login input" ).show();
+							} else {
+
+								var url2="http://sbcd.appsbdrj.kinghost.net/codigo.php?codigo=" + field.codigo;
+								
+								Cookies.set('email', field.codigo, { expires: 365 });
+								
+								$.getJSON(url2,function(result){
+									$.each(result, function(i, field2){
+										
+										if(field2.status == '1'){
+											Cookies.set('nome', field2.nome, { expires: 365 });
+											Cookies.set('email', field2.genero, { expires: 365 });
+											window.location.replace("inicial.html");
+										} else {
+											$('.response').html('<span id="erro-login">Ocorreu um erro, por favor tente novamente.<span>');
+											$( "#login input" ).show();
+										};
+										
+									});
+								});
+											
+							}
+						});
+					});
+
+					return false;
+
+				});
+
+			});
+			$( document ).ajaxStart(function() {
+			  $( "#loader" ).show();
+			  $( "#login input" ).hide();
+			});
+			$( document ).ajaxStop(function() {
+			  $( "#loader" ).hide();
+			});
+		</script>
+
+		<div id="app">
+			
+			<header id="h-login">
+				<img src="img/logo-full.png" alt="" />
+			</header>
+			<section class="login">	
+				<img src="img/lock.jpg" alt="" />
+				<fieldset>
+					<legend>ÁREA DO ASSOCIADO</legend>
+					<span class="response"></span>
+					<form id="login">
+						<img src="img/loader.gif" id="loader" alt="" style="display: none;">
+						<input type="text" placeholder="CPF" />
+						<input type="password" placeholder="Senha" />
+						<button type="submit">ENTRAR</button>
+						Para acessar, utilize o login e senha da área do associado do site da SBCD.
+					</form>
+				</fieldset>
+			</section>
+			<section class="login" style="margin-top: 20px; padding-bottom: 100px;">
+				<img src="img/note.jpg" alt="" />
+				<fieldset>
+					<legend>EVENTOS DA SBCD</legend>
+					<div>
+						<a href="eventos.html" class="btn">VER LISTA DE EVENTOS</a>
+					</div>
+				</fieldset>
+			</section>
+		</div>
+
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		
+		<script type="text/javascript">
+			app.initialize();
+		</script>
+	</body>
+
+</html>
