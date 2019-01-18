@@ -18,48 +18,51 @@
 		-->
 		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
-		
+		<title>SBCD</title>
+
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		
+
 		<link rel="stylesheet" href="css/owl.carousel.min.css">
 		<link rel="stylesheet" href="css/owl.theme.default.min.css">
-		
+
 		<script src="js/jquery.min.js"></script>
 		<script src="js/owl.carousel.js"></script>
-		
+
 		<script src="js/jquery-cookie.js"></script>
-		
+
 		<script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
-		
-		
+
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-
-		
-		<title>SBCD</title>
 	</head>
-	
-	<body>
 
+	<body>
 		<div class="app">
-			
+
 			<script type="text/javascript">
 				$(document).ready(function() {
-					 var url="http://sbcd.appsbdrj.kinghost.net/evento.php?id=" + getParameterByName('id');
-					
-					 $.getJSON(url,function(result){
+					var url="http://sbcd.appsbdrj.kinghost.net/evento.php?id=" + getParameterByName('id');
 
-						 $.each(result, function(i, field){
-							 
+					$.getJSON(url,function(result){
+
+						console.log('result', result);
+
+						$.each(result, function(i, field){
+
 							 if(field.data_inicial == field.data_final){
 								 var dias = field.data_inicial;
 							 } else {
 								 var dias = field.data_inicial + ' a ' + field.data_final;
 							 }
-							 
+
 							 $("#data").html(dias  + ' de ' + field.mes + ' de ' + field.ano);
+
 							 $('#local').html(field.local);
+
 							 $('#marca').attr("src", field.marca);
-							 
+
+							 if(field.valores !== '') {
+								 $('#event-info').append('<li><a id="valores">Inscrição <i class="fas fa-caret-right"></i></a></li>');
+							 }
 							 if(field.mensagem !== '') {
 								 $('#event-info').append('<li><a id="mensagem">Mensagem da Organização <i class="fas fa-caret-right"></i></a></li>');
 							 }
@@ -78,8 +81,14 @@
 							 if(field.turismo !== '') {
 								 $('#event-info').append('<li><a id="turismo">Turismo <i class="fas fa-caret-right"></i></a></li>');
 							 }
+							 if(field.conheca_goias !== '') {
+								 $('#event-info').append('<li style="display:none;" class="submenu"><a id="conheca_goias">Conheça Goias <i class="fas fa-caret-right"></i></a></li>');
+							 }
+							 if(field.o_que_fazer !== '') {
+								 $('#event-info').append('<li style="display:none;" class="submenu"><a id="o_que_fazer">O que fazer <i class="fas fa-caret-right"></i></a></li>');
+							 }
 							 if(field.videos !== '') {
-								 $('#event-info').append('<li><a id="videos">Vídeos <i class="fas fa-caret-right"></i></a></li>');
+								 $('#event-info').append('<li><a id="videos" href="navegador.html">News <i class="fas fa-caret-right"></i></a></li>');
 							 }
 							 if(field.mapa !== '') {
 								 $('#event-info').append('<li><a id="mapa">Mapa do local <i class="fas fa-caret-right"></i></a></li>');
@@ -87,54 +96,70 @@
 							 if(field.patrocinadores !== '') {
 								 $('#event-info').append('<li><a href="patrocinadores">Patrocinadores <i class="fas fa-caret-right"></i></a></li>');
 							 }
-							 if(field.valores !== '') {
-								 $('#event-info').append('<li><a id="valores">Valores e inscrição <i class="fas fa-caret-right"></i></a></li>');
+							 if(field.go_green !== '') {
+								 $('#event-info').append('<li><a id="go_green">Go Green <i class="fas fa-caret-right"></i></a></li>');
 							 }
-							 
+
 							 $('.mensagem').append(field.mensagem.replace(/\r/g,"<br>"));
 							 $('.sobre').append(field.sobre.replace(/\r/g,"<br>"));
 							 $('.programacao').append(field.programacao.replace(/\r/g,"<br>"));
 							 $('.trabalhos').append(field.trabalhos.replace(/\r/g,"<br>"));
 							 $('.passagens').append(field.passagens.replace(/\r/g,"<br>"));
 							 $('.turismo').append(field.turismo.replace(/\r/g,"<br>"));
+							 $('.conheca_goias').append(field.conheca_goias.replace(/\r/g,"<br>"));
+							 $('.o_que_fazer').append(field.o_que_fazer.replace(/\r/g,"<br>"));
 							 $('.videos').append(field.videos.replace(/\r/g,"<br>"));
 							 $('.mapa').append(field.mapa.replace(/\r/g,"<br>"));
 							 $('.patrocinadores').append(field.patrocinadores.replace(/\r/g,"<br>"));
 							 $('.valores').append(field.valores.replace(/\r/g,"<br>"));
+							 $('.go_green').append(field.go_green.replace(/\r/g,"<br>"));
 						 });
 					 });
 				});
+
+				$(document).on('click', 'a[href="https://automacaodeeventos.com.br/cbcd2019/sis/inscricao/index.asp"]', function(e){
+					e.preventDefault();
+					window.location = 'cbcd2019_inscricao.html';
+				});
+
+				$(document).on('click', '.videos a', function(e){
+					e.preventDefault();
+					window.location = 'navegador.html?url='+$(this).attr('href');
+				});
 			</script>
-			
+
 			<h1 style="background: #4278CC;" class="spacer"><a href="eventos.html" class="back"><i class="fas fa-chevron-left"></i></a> <img src="img/eventos-branco.png" /> EVENTOS</h1>
-			
+
 			<section id="container" class="event-single">
-				
+
 				<img src="img/loader.gif" id="loader" alt="" style="display: none;">
-				
+
 				<img id="marca" src="" alt="" />
 				<section class="event-info">
 					<i class="far fa-calendar-alt"></i> <span id="data"></span> <i class="fas fa-map-marker-alt" style="margin-left: 10px;"></i> <span id="local"></span>
 				</section>
-				
+
 				<ul id="event-info">
 					<!--<li><a href="http://go19.com.br/programa/" target="_blank">Programação <i class="fas fa-caret-right"></i></a></li>
 					<li><a href="go19-forum.html">Fórum <i class="fas fa-caret-right"></i></a></li>-->
 				</ul>
-				
+
 				<div class="mensagem" style="display: none;"><div class="sec-evento-title">MENSAGEM DA ORGANIZAÇÃO</div></div>
 				<div class="sobre" style="display: none;"><div class="sec-evento-title">SOBRE O EVENTO</div></div>
 				<div class="programacao" style="display: none;"><div class="sec-evento-title">PROGRAMAÇÂO</div></div>
 				<div class="passagens" style="display: none;"><div class="sec-evento-title">PASSAGENS E HOSPEDAGEM</div></div>
 				<div class="turismo" style="display: none;"><div class="sec-evento-title">TURISMO</div></div>
-				<div class="videos" style="display: none;"><div class="sec-evento-title">VÍDEOS</div></div>
+				<div class="conheca_goias" style="display: none;"><div class="sec-evento-title">CONHEÇA GOIAS</div></div>
+				<div class="o_que_fazer" style="display: none;"><div class="sec-evento-title">O QUE FAZER</div></div>
+				<div class="videos" style="display: none;"><div class="sec-evento-title">NEWS</div></div>
 				<div class="trabalhos" style="display: none;"><div class="sec-evento-title">TRABALHOS CIENTÌFICOS</div></div>
 				<div class="mapa" style="display: none;"><div class="sec-evento-title">MAPA DO LOCAL</div></div>
 				<div class="patrocinadores" style="display: none;"><div class="sec-evento-title">PATROCINADORES</div></div>
-				<div class="valores" style="display: none;"><div class="sec-evento-title">VALORES E INSCRIÇÃO</div></div>
-				
+				<div class="valores" style="display: none;"><div class="sec-evento-title">INSCRIÇÃO</div></div>
+				<div class="go_green" style="display: none;"><div class="sec-evento-title">GO GREEN</div></div>
+
 			</section>
-			
+
 		</div>
 
 		<script type="text/javascript" src="cordova.js"></script>
