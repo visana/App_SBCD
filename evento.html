@@ -123,6 +123,11 @@
 					window.location = 'cbcd2019_inscricao.html';
 				});
 
+				$(document).on('click', 'a[href="http://go19.com.br/wp-content/uploads/2018/08/CONCURSO_GOGreen_V2.pdf"]', function(e){
+					e.preventDefault();
+					window.location = 'cbcd2019_pd_go_green.html';
+				});
+				
 				$(document).on('click', '.videos a', function(e){
 					e.preventDefault();
 					window.location = 'navegador.html?url='+$(this).attr('href');
