@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.visana.sbcd" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-<!-- <widget id="com.visana<strong></strong>.sbcd" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">-->
+<!-- <widget id="com.visana.sbcd" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">-->
     <name>SBCD</name>
     <description>
        A SBCD traz ao seu associado um aplicativo com uma série de facilidades, como programação de eventos, novidades, manuais, fórum e muito mais.
