@@ -57,10 +57,48 @@ document.addEventListener('deviceready', function () {
   
   var notificationOpenedCallback = function(jsonData) {
     console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+
+        navigator.notification.alert(
+            msg,
+            '',
+            titulo,
+            'Ok'
+        );
   };
 
   window.plugins.OneSignal
     .startInit("e4d4f380-a08d-4cf8-8310-0f8246f4b81f")
-    .handleNotificationOpened(notificationOpenedCallback)
+    .handleNotificationReceived(function(argument) {
+            
+        var data = argument.payload.additionalData;
+        var msg = data.msg;
+        var titulo = data.titulo;
+
+        navigator.notification.alert(
+            msg,
+            '',
+            titulo,
+            'Ok'
+        );
+    })
+    .handleNotificationOpened(function(argument) {
+        
+        var data = argument.notification.payload.additionalData;
+        var msg = data.msg;
+        var titulo = data.titulo;
+
+        /*navigator.notification.alert(
+            msg,
+            '',
+            titulo,
+            'Ok'
+        );*/
+    })
     .endInit();
 }, false);
+
+
+
+
+
+
