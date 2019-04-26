@@ -45,7 +45,7 @@
 
 					$.getJSON(url,function(result){
 
-						console.log('result', result);
+						//console.log('result', result);
 
 						$.each(result, function(i, field){
 
@@ -61,6 +61,8 @@
 
 							 $('#marca').attr("src", field.marca);
 
+							 field.patrocinadores = true;
+
 							 if(field.valores !== '') {
 								 $('#event-info').append('<li><a id="valores">Inscrição <i class="fas fa-caret-right"></i></a></li>');
 							 }
@@ -71,7 +73,7 @@
 								 $('#event-info').append('<li><a id="sobre">Sobre o Evento <i class="fas fa-caret-right"></i></a></li>');
 							 }
 							 if(field.programacao !== '') {
-								 $('#event-info').append('<li><a id="programacao">Programação <i class="fas fa-caret-right"></i></a></li>');
+								 $('#event-info').append('<li><a href="programacao.html">Programação <i class="fas fa-caret-right"></i></a></li>');
 							 }
 							 if(field.trabalhos !== '') {
 								 $('#event-info').append('<li><a id="trabalhos">Trabalhos Científicos <i class="fas fa-caret-right"></i></a></li>');
@@ -95,7 +97,7 @@
 								 $('#event-info').append('<li><a id="mapa">Mapa do local <i class="fas fa-caret-right"></i></a></li>');
 							 }
 							 if(field.patrocinadores !== '') {
-								 $('#event-info').append('<li><a href="patrocinadores">Patrocinadores <i class="fas fa-caret-right"></i></a></li>');
+								 $('#event-info').append('<li><a href="patrocinadores.html">Patrocinadores <i class="fas fa-caret-right"></i></a></li>');
 							 }
 							 if(field.go_green !== '') {
 								 $('#event-info').append('<li><a id="go_green">Go Green <i class="fas fa-caret-right"></i></a></li>');
@@ -111,7 +113,7 @@
 							 $('.o_que_fazer').append(field.o_que_fazer.replace(/\r/g,"<br>"));
 							 $('.videos').append(field.videos.replace(/\r/g,"<br>"));
 							 $('.mapa').append(field.mapa.replace(/\r/g,"<br>"));
-							 $('.patrocinadores').append(field.patrocinadores.replace(/\r/g,"<br>"));
+							 /*$('.patrocinadores').append(field.patrocinadores.replace(/\r/g,"<br>"));*/
 							 $('.valores').append(field.valores.replace(/\r/g,"<br>"));
 							 $('.go_green').append(field.go_green.replace(/\r/g,"<br>"));
 						 });
