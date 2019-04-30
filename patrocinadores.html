@@ -37,6 +37,7 @@
 
 		<style type="text/css">
 			body, html {width: 100%; height: 100%;}
+			.div_apple {overflow:scroll !important; -webkit-overflow-scrolling:touch !important;}
 		</style>
 	</head>
 
@@ -50,6 +51,13 @@
 					    
 					    $('#loader').hide();
 					    $('#cont_iframe').show();
+
+					    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+						if(userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i )){
+						    
+						    $('.iframe_ex').addClass('div_apple');
+						}
 					};
 				});
 			</script>
@@ -59,7 +67,9 @@
 			<img src="img/loader.gif" id="loader" style="display: block; margin: 100px auto;" alt="">
 			
 			<div id="cont_iframe" style="display: none; position: absolute; width: 100%; height: 100%; overflow: hidden; padding-top: 121px; padding-bottom: 65.8px; box-sizing: border-box; z-index: 0;">
-				<iframe id="iframe" src="http://go19.com.br/app/patrocinadores.php" style="width: 100%; height: 100%;"></iframe>
+				<div class="iframe_ex" style="height: 100%; width: 100%;">
+					<iframe id="iframe" src="http://go19.com.br/app/patrocinadores.php" style="width: 100%; height: 100%;"></iframe>
+				</div>
 			</div>
 		</div>
 
